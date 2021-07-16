@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+    nodejs:
+        container_name: api
+        stdin_open: true
+        build:
+            context: ./api
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        ports:
+            - "5000:5000"
+
+    react:
+        container_name: app
+        stdin_open: true
+        build:
+            context: ./front
+            dockerfile: Dockerfile
+        volumes:
+            - './front:/app'
+            - './front/public/:/app/public'
+        restart: unless-stopped
+        ports:
+            - "3000:3000"
